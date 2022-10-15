@@ -1,13 +1,23 @@
 const express = require("express");
 const app = express();
 
-app.use((req,res,next)=>{
-    console.log("middleware 1 run");
+var count = 0;
+app.use('/',(req,res,next)=>{
+    count++;
+    console.log("log-" +count);
     next();
 });
 
-app.use((req,res,next)=>{
-    console.log("middleware 2 run");
+app.use('/add-product',(req,res,next)=>{
+    res.send('<h1>Hello from express adding product</h1>');
+});
+
+app.use('/add-list',(req,res,next)=>{
+    res.send('<h1>Hello from express product list</h1>');
+});
+
+app.use('/',(req,res,next)=>{
+    console.log("middleware run");
     res.send('<h1>Hello from express</h1>');
 });
 
