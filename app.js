@@ -1,21 +1,30 @@
 const express = require("express");
 const app = express();
+const bordyParser = require('body-parser');
+const bodyParser = require("body-parser");
 
-var count = 0;
-app.use('/',(req,res,next)=>{
-    count++;
-    console.log("log-" +count);
-    next();
-});
+app.use(bodyParser.urlencoded({extended:false}));
 
 app.use('/add-product',(req,res,next)=>{
-    res.send('<h1>Hello from express adding product</h1>');
+    res.send(`
+        <html>
+            <head><title>Add a New Product</title></head>
+            <body>
+                <form action="product" method="POST">
+                    <input type="text" name="productName">
+                    <input type="submit" value="Save Product">
+                </form>
+            </body>
+        </html>
+    `);
 });
 
-app.use('/add-list',(req,res,next)=>{
-    res.send('<h1>Hello from express product list</h1>');
+app.post('/product' , (req,res,next) =>{
+    // db add
+    console.log(req.body);
+    console.log(req)
+    res.redirect('/');
 });
-
 app.use('/',(req,res,next)=>{
     console.log("middleware run");
     res.send('<h1>Hello from express</h1>');
