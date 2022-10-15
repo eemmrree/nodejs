@@ -9,6 +9,10 @@ app.use(bodyParser.urlencoded({extended:false}));
 app.use('/admin',adminRoutes);
 app.use(userRoutes);
 
+app.use((req,res)=>{
+    res.status(404).send('<h1>Page Not Found</h1>');
+})
+
 app.listen(3000,()=>{
     console.log('listening on port 3000')
 });
